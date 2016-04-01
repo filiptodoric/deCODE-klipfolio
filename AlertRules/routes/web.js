@@ -25,7 +25,6 @@ router.post('/conditions', function(req, res, next) {
 	var limit = parseInt(limitJson.data);
 	
     var valueJSON = genJSON();
-    //var value = valueJSON.data;
 	if(eval(condition, valueJSON, limit)){
 		sendInfoToTeamTwo(message);
 	}
@@ -45,8 +44,8 @@ router.post('/availableEndPoints', function(req, res, next) {
 });
 
 //condition 	: (String) that agrees with one fo the constants
-//value			: (object) data[]
-//limit			: (object) limit[]
+//value			: (number) data
+//limit			: (number) limit
 var eval = function(condition, value, limit){
 	//what the rest api calls for the compare operators
 	const greaterThan = ">";

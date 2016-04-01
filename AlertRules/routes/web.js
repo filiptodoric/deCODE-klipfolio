@@ -5,6 +5,19 @@ const greaterThan = ">";
 const lessThan = "<";
 const equal = "=";
 
+
+
+var jsonObj = {'data': 0}
+
+var genJSON = function() {
+    var newData = Math.floor((Math.random() * 100) + 1);
+    return jsonObj.data = newData;
+}
+
+
+
+
+
 router.post('/conditions', function(req, res, next) {
     var name = req.body.name;
     var condition = req.body.condition;

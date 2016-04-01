@@ -76,7 +76,7 @@ var eval = function(condition, value, limit){
 var sendInfoToTeamTwo = function(body) {
     var jsonObj = {
         'message': {
-            'title': "Fake Title",
+            'title': "Username",
             'body': body
         },
         'config': {

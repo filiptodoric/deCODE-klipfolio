@@ -9,7 +9,9 @@ const equal = "=";
 
 var jsonObj = {'data': []};
 var genJSON = function() {
-    object = 100;
+    
+	//instead of gererating a json, get the jason as data and convert it to a number
+	object = 100;
 	//jsonObj.data[jsonObj.data.length] = [100];
 	//jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
     return object;
@@ -18,7 +20,6 @@ var genJSON = function() {
 router.post('/conditions', function(req, res, next) {
     var message = req.body.message;
     var condition = req.body.condition;
-    
 	//data that will set the limit of the data
 	var limitJson = {'data': req.body.value};
 	var limit = parseInt(limitJson.data);
@@ -29,6 +30,18 @@ router.post('/conditions', function(req, res, next) {
 		sendInfoToTeamTwo(message);
 	}
     res.send('Success');
+});
+
+router.post('/availableEndPoints', function(req, res, next) {
+    var selection = req.body.selection;
+    
+    request({
+        url: "",
+        method: "POST",
+        json: true
+    }, function(error, response, body) {
+        console.log(response);
+    });
 });
 
 //condition 	: (String) that agrees with one fo the constants
@@ -45,10 +58,7 @@ var eval = function(condition, value, limit){
 	const contains = "exist";
 	const doesNotContain = "notExist";
 	
-	//if this is true then the objects being compared are not the same object (diffrrent feilds)
-/*	if(!(_.isEqual(value[0].keys(),limit.keys()))){
-			return false;
-	}*/
+	//compare functions
 	if(condition === greaterThan) {
 		return (value > limit);
 	}
@@ -79,28 +89,10 @@ var eval = function(condition, value, limit){
 	}
 };
 
-/*var eval = function(condition, value, limit)   {
-    if(condition == greaterThan) {
-        if(value[0] > limit)   {
-            sendInfoToTeamTwo();
-        }
-    }
-    else if (condition == lessThan) {
-        if(value[0] < limit)   {
-            sendInfoToTeamTwo();
-        }
-    }
-    else if(condition == equal) {
-        if(value[0] == limit)  {
-            sendInfoToTeamTwo();
-        }
-    }
-};*/
-
 var sendInfoToTeamTwo = function(body) {
     var jsonObj = {
         'message': {
-            'title': "Fake Title",
+            'title': "Username",
             'body': body
         },
         'config': {

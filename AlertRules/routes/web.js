@@ -16,13 +16,12 @@ var genJSON = function() {
 router.post('/conditions', function(req, res, next) {
     var name = req.body.name;
     var condition = req.body.condition;
-    var limit = req.body.limit;
+    var limit = {'data': req.body.limit};
     var valueJSON = genJSON();
     var value = valueJSON.data;
-	if(eval(condition, value, limit)){
+	if(eval(condition, valueJSON, limit)){
 		sendInfoToTeamTwo();
 	}
-
     res.send('Success');
 });
 
@@ -41,27 +40,27 @@ var eval = function(condition, value, limit){
 	const doesNotContain = "notExist";
 	
 	//if this is true then the objects being compared are not the same object (diffrrent feilds)
-	if(!(_isEqual(value.keys(),limit.keys()))){
+/*	if(!(_.isEqual(value[0].keys(),limit.keys()))){
 			return false;
-	}
+	}*/
 	//compare functions
 	if(condition === greaterThan) {
-		return (value[0] > limit[0]);
+		return (parseInt(value.data[0]) > parseInt(limit.data));
 	}
 	else if (condition === lessThan) {
-		return (value[0] < limit[0]);
+		return (parseInt(value.data[0]) < parseInt(limit.data));
 	}
 	else if(condition === equal) {
-		return _isEqual(value,limit);
+		return _.isEqual(value,limit);
 	}
 	else if(condition == notEqual){
-		return !(_isEqual(value,limit));
+		return !(_.isEqual(value,limit));
 	}
 	else if(condition === lessThanEqual){
-		return (value[0] <= limit[0]);
+		return (parseInt(value.data[0]) <= parseInt(limit.data));
 	}
 	else if(condition === greaterThanEqual){
-		return (value[0] >= limit[0]);
+		return (parseInt(value.data[0]) >= parseInt(limit.data));
 	}
 	else if (condition === contains){
 		return _.has(value,limit);
@@ -69,7 +68,7 @@ var eval = function(condition, value, limit){
 	else if(condition === doesNotContain){
 		return !(_.has(value,limit));
 	}
-	else{
+	else	{
 		return false;
 	}
 };
@@ -96,13 +95,15 @@ var sendInfoToTeamTwo = function() {
     var jsonObj = {
         'message': {
             'title': "Fake Title",
-            'body': 'Fake Body'
+            'body': 'This time the message is actually different!'
         },
-        'config': "Fake Config"
+        'config': {
+            'channel': "#random"
+        }
     };
     
     request({
-        url: "",
+        url: "https://klipfolio-notifier.herokuapp.com/v1/slack",
         method: "POST",
         json: true,
         body: jsonObj

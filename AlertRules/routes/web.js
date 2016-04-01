@@ -46,46 +46,30 @@ var eval = function(condition, value, limit){
 	}
 	//compare functions
 	if(condition === greaterThan) {
-		if(value[0] > limit[0]) {
-            sendInfoToTeamTwo();
-        }
+		return (value[0] > limit[0]);
 	}
 	else if (condition === lessThan) {
-		if(value[0] < limit[0]) {
-            sendInfoToTeamTwo();
-        }
+		return (value[0] < limit[0]);
 	}
 	else if(condition === equal) {
-		if(_isEqual(value,limit))   {
-            sendInfoToTeamTwo();
-        }
+		return _isEqual(value,limit);
 	}
 	else if(condition == notEqual){
-		if(!(_isEqual(value,limit)))    {
-            sendInfoToTeamTwo();
-        }
+		return !(_isEqual(value,limit));
 	}
 	else if(condition === lessThanEqual){
-		if(value[0] <= limit[0])   {
-            sendInfoToTeamTwo();
-        }
+		return (value[0] <= limit[0]);
 	}
 	else if(condition === greaterThanEqual){
-		if(value[0] >= limit[0])    {
-            sendInfoToTeamTwo();
-        }
+		return (value[0] >= limit[0]);
 	}
 	else if (condition === contains){
-		if(_.has(value,limit))  {
-            sendInfoToTeamTwo();
-        }
+		return _.has(value,limit);
 	}
 	else if(condition === doesNotContain){
-		if(!(_.has(value,limit)))   {
-            sendInfoToTeamTwo();
-        }
+		return !(_.has(value,limit));
 	}
-	else {
+	else{
 		return false;
 	}
 };

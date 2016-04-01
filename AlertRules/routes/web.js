@@ -1,11 +1,12 @@
 var express = require('express');
+var request = require('request');
 var router = express.Router();
 
 const greaterThan = ">";
 const lessThan = "<";
 const equal = "=";
 
-var jsonObj = {'data': []}
+var jsonObj = {'data': []};
 var genJSON = function() {
     jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
     return jsonObj;
@@ -73,6 +74,25 @@ var eval = function(condition, value, limit)   {
 	else{
 		return false;    
 	}
+}
+
+var sendInfoToTeamTwo = function() {
+    var jsonObj = {
+        'message': {
+            'title': "Fake Title",
+            'body': 'Fake Body'
+        },
+        'config': "Fake Config"
+    };
+    
+    request({
+        url: "",
+        method: "POST",
+        json: true,
+        body: jsonObj
+    }, function(error, response, body) {
+        console.log(response);
+    })
 }
 
 module.exports = router;

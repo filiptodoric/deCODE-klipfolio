@@ -9,16 +9,22 @@ const equal = "=";
 
 var jsonObj = {'data': []};
 var genJSON = function() {
-    jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
-    return jsonObj;
+    object = 100;
+	//jsonObj.data[jsonObj.data.length] = [100];
+	//jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
+    return object;
 };
 
 router.post('/conditions', function(req, res, next) {
     var message = req.body.message;
     var condition = req.body.condition;
-    var limit = {'data': req.body.value};
+    
+	//data that will set the limit of the data
+	var limitJson = {'data': req.body.value};
+	var limit = parseInt(limitJson.data);
+	
     var valueJSON = genJSON();
-    var value = valueJSON.data;
+    //var value = valueJSON.data;
 	if(eval(condition, valueJSON, limit)){
 		sendInfoToTeamTwo(message);
 	}
@@ -43,12 +49,11 @@ var eval = function(condition, value, limit){
 /*	if(!(_.isEqual(value[0].keys(),limit.keys()))){
 			return false;
 	}*/
-	//compare functions
 	if(condition === greaterThan) {
-		return (parseInt(value.data[0]) > parseInt(limit.data));
+		return (value > limit);
 	}
 	else if (condition === lessThan) {
-		return (parseInt(value.data[0]) < parseInt(limit.data));
+		return (value < limit);
 	}
 	else if(condition === equal) {
 		return _.isEqual(value,limit);
@@ -57,18 +62,19 @@ var eval = function(condition, value, limit){
 		return !(_.isEqual(value,limit));
 	}
 	else if(condition === lessThanEqual){
-		return (parseInt(value.data[0]) <= parseInt(limit.data));
+		return (value <= limit);
 	}
 	else if(condition === greaterThanEqual){
-		return (parseInt(value.data[0]) >= parseInt(limit.data));
+		return (value >= limit);
 	}
+	/*
 	else if (condition === contains){
 		return _.has(value,limit);
 	}
 	else if(condition === doesNotContain){
 		return !(_.has(value,limit));
-	}
-	else	{
+	}*/
+	else{
 		return false;
 	}
 };

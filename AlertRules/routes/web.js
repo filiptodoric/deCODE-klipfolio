@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('underscore');
 var router = express.Router();
 
 const greaterThan = ">";
@@ -25,53 +26,48 @@ router.post('/conditions', function(req, res, next) {
 //condition 	: (String) that agrees with one fo the constants
 //value			: (object) data[]
 //limit			: (object) limit[]
-var eval = function(condition, value, limit)   {
+var eval = function(condition, value, limit){
+	//what the rest api calls for the compare operators
 	const greaterThan = ">";
 	const lessThan = "<";
 	const equal = "=";
+	const notEqual = "!=";
 	const lessThanEqual = "<=";
 	const greaterThanEqual = ">=";
 	const contains = "exist";
 	const doesNotContain = "notExist";
 	
-	//use typescript to see if the json object is valid
+	//if this is true then the objects being compared are not the same object (diffrrent feilds)
+	if(!(_isEqual(value.keys(),limit.keys()))){
+			return false;
+	}
+	//compare functions
 	if(condition === greaterThan) {
-		return (value > limit);
+		return (value[0] > limit[0]);
 	}
 	else if (condition === lessThan) {
-		return (value < limit);
+		return (value[0] < limit[0]);
 	}
 	else if(condition === equal) {
-		return (value === limit);
+		return _isEqual(value,limit);
+	}
+	else if(condition == notEqual){
+		return !(_isEqual(value,limit));
 	}
 	else if(condition === lessThanEqual){
-	return (value <= limit);
+		return (value[0] <= limit[0]);
 	}
 	else if(condition === greaterThanEqual){
-	return (value >= limit);
+		return (value[0] >= limit[0]);
 	}
-	else if (condition == contains){
-		for(i = 0;i < value.length;i++){
-			for(j = 0; i < limit.length;j++){
-				if(value[i] === limit[j]){
-						return true;
-				}
-			}
-		}
-		return false;
+	else if (condition === contains){
+		return _.has(value,limit);
 	}
 	else if(condition === doesNotContain){
-		for(i = 0;i < value.length;i++){
-			for(j = 0; i < limit.length;j++){
-				if(value[i] === limit[j]){
-					return false;
-				}
-			}
-		}
-		return true;
+		return !(_.has(value,limit));
 	}
 	else{
-		return false;    
+		return false;
 	}
 }
 

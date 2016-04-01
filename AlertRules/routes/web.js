@@ -5,10 +5,9 @@ const greaterThan = ">";
 const lessThan = "<";
 const equal = "=";
 
-var jsonObj = {'data': 0}
+var jsonObj = {'data': []}
 var genJSON = function() {
-    var newData = Math.floor((Math.random() * 100) + 1);
-    jsonObj.data = newData;
+    jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
     return jsonObj;
 };
 

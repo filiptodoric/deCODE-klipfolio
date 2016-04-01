@@ -23,9 +23,11 @@
   	<h1>{{title}}</h1>
   	<form>
   	<label>Key</label>
+  	<br>
   	<input type="text" ng-model="config.key" />
   	<br>
   	<label>Condition</label>
+  	<br>
   	<select id="condition" ng-model="config.condition">
                 <option value="greater-than"> > </option>
                 <option value="less-than"> < </option>
@@ -33,9 +35,11 @@
     </select>
   	<br>
   	<label>Value</label>
+  	<br>
   	<input type="text"ng-model="config.value" />
   	<br>
   	<label>Message</label>
+  	<br>
   	<input type="textbox" ng-model="config.message" />
   	<br>
   	<input type="submit" ng-click="sendConfig(url, config)">

@@ -16,10 +16,12 @@ var genJSON = function() {
 router.post('/conditions', function(req, res, next) {
     var name = req.body.name;
     var condition = req.body.condition;
-    var limit = req.body.limit;
+    var limit = [req.body.limit];
     var valueJSON = genJSON();
     var value = valueJSON.data;
+    console.log("BEFORE EVAL");
 	if(eval(condition, value, limit)){
+        console.log("IF EVAL");
 		sendInfoToTeamTwo();
 	}
 
@@ -41,9 +43,12 @@ var eval = function(condition, value, limit){
 	const doesNotContain = "notExist";
 	
 	//if this is true then the objects being compared are not the same object (diffrrent feilds)
-	if(!(_isEqual(value.keys(),limit.keys()))){
-			return false;
+	if(!(_.isEqual(value.keys(),limit.keys()))){
+        console.log("IS EQUAL");
+        return false;
 	}
+    
+    console.log("AFTER EQUAL");
 	//compare functions
 	if(condition === greaterThan) {
 		return (value[0] > limit[0]);

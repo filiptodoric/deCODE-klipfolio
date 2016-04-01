@@ -19,14 +19,24 @@ router.post('/conditions', function(req, res, next) {
     var limit = [req.body.limit];
     var valueJSON = genJSON();
     var value = valueJSON.data;
-    console.log("BEFORE EVAL");
 	if(eval(condition, value, limit)){
-        console.log("IF EVAL");
 		sendInfoToTeamTwo();
 	}
 
     res.send('Success');
 });
+
+router.post('/availableEndPoints', function(req, res, next) {
+    var selection = req.body.selection;
+    
+    request({
+        url: "",
+        method: "POST",
+        json: true
+    }, function(error, response, body) {
+        console.log(response);
+    });
+}
 
 //condition 	: (String) that agrees with one fo the constants
 //value			: (object) data[]
@@ -44,11 +54,9 @@ var eval = function(condition, value, limit){
 	
 	//if this is true then the objects being compared are not the same object (diffrrent feilds)
 	if(!(_.isEqual(value.keys(),limit.keys()))){
-        console.log("IS EQUAL");
         return false;
 	}
     
-    console.log("AFTER EQUAL");
 	//compare functions
 	if(condition === greaterThan) {
 		return (value[0] > limit[0]);
@@ -79,24 +87,6 @@ var eval = function(condition, value, limit){
 	}
 };
 
-/*var eval = function(condition, value, limit)   {
-    if(condition == greaterThan) {
-        if(value[0] > limit)   {
-            sendInfoToTeamTwo();
-        }
-    }
-    else if (condition == lessThan) {
-        if(value[0] < limit)   {
-            sendInfoToTeamTwo();
-        }
-    }
-    else if(condition == equal) {
-        if(value[0] == limit)  {
-            sendInfoToTeamTwo();
-        }
-    }
-};*/
-
 var sendInfoToTeamTwo = function() {
     var jsonObj = {
         'message': {
@@ -107,7 +97,7 @@ var sendInfoToTeamTwo = function() {
     };
     
     request({
-        url: "http://httpbin.org/ip",
+        url: "",
         method: "POST",
         json: true,
         body: jsonObj

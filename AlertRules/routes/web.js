@@ -73,24 +73,6 @@ var eval = function(condition, value, limit){
 	}
 };
 
-/*var eval = function(condition, value, limit)   {
-    if(condition == greaterThan) {
-        if(value[0] > limit)   {
-            sendInfoToTeamTwo();
-        }
-    }
-    else if (condition == lessThan) {
-        if(value[0] < limit)   {
-            sendInfoToTeamTwo();
-        }
-    }
-    else if(condition == equal) {
-        if(value[0] == limit)  {
-            sendInfoToTeamTwo();
-        }
-    }
-};*/
-
 var sendInfoToTeamTwo = function(body) {
     var jsonObj = {
         'message': {

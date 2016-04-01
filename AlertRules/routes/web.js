@@ -14,13 +14,13 @@ var genJSON = function() {
 };
 
 router.post('/conditions', function(req, res, next) {
-    var name = req.body.name;
+    var message = req.body.message;
     var condition = req.body.condition;
-    var limit = {'data': req.body.limit};
+    var limit = {'data': req.body.value};
     var valueJSON = genJSON();
     var value = valueJSON.data;
 	if(eval(condition, valueJSON, limit)){
-		sendInfoToTeamTwo();
+		sendInfoToTeamTwo(message);
 	}
     res.send('Success');
 });
@@ -91,11 +91,11 @@ var eval = function(condition, value, limit){
     }
 };*/
 
-var sendInfoToTeamTwo = function() {
+var sendInfoToTeamTwo = function(body) {
     var jsonObj = {
         'message': {
             'title': "Fake Title",
-            'body': 'This time the message is actually different!'
+            'body': body
         },
         'config': {
             'channel': "#random"

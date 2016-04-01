@@ -51,7 +51,7 @@ var sendInfoToTeamTwo = function() {
     };
     
     request({
-        url: "",
+        url: "http://httpbin.org/ip",
         method: "POST",
         json: true,
         body: jsonObj

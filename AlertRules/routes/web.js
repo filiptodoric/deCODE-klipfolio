@@ -24,6 +24,7 @@ router.post('/conditions', function(req, res, next) {
     var value = req.body.value;
     var limit = req.body.limit;
 
+    eval(condition, value, limit);
     // Uncomment to test :)
     // console.log("Name is : " + name + " condition is: " + condition + " value is: " + value);
     res.send('Success');

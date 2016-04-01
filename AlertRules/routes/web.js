@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('underscore');
 var request = require('request');
 var router = express.Router();
 
@@ -18,12 +19,62 @@ router.post('/conditions', function(req, res, next) {
     var limit = req.body.limit;
     var valueJSON = genJSON();
     var value = valueJSON.data;
-    eval(condition, value, limit);
+	if(eval(condition, value, limit)){
+		sendInfoToTeamTwo();
+	}
 
     res.send('Success');
 });
 
-var eval = function(condition, value, limit)   {
+//condition 	: (String) that agrees with one fo the constants
+//value			: (object) data[]
+//limit			: (object) limit[]
+var eval = function(condition, value, limit){
+	//what the rest api calls for the compare operators
+	const greaterThan = ">";
+	const lessThan = "<";
+	const equal = "=";
+	const notEqual = "!=";
+	const lessThanEqual = "<=";
+	const greaterThanEqual = ">=";
+	const contains = "exist";
+	const doesNotContain = "notExist";
+	
+	//if this is true then the objects being compared are not the same object (diffrrent feilds)
+	if(!(_isEqual(value.keys(),limit.keys()))){
+			return false;
+	}
+	//compare functions
+	if(condition === greaterThan) {
+		return (value[0] > limit[0]);
+	}
+	else if (condition === lessThan) {
+		return (value[0] < limit[0]);
+	}
+	else if(condition === equal) {
+		return _isEqual(value,limit);
+	}
+	else if(condition == notEqual){
+		return !(_isEqual(value,limit));
+	}
+	else if(condition === lessThanEqual){
+		return (value[0] <= limit[0]);
+	}
+	else if(condition === greaterThanEqual){
+		return (value[0] >= limit[0]);
+	}
+	else if (condition === contains){
+		return _.has(value,limit);
+	}
+	else if(condition === doesNotContain){
+		return !(_.has(value,limit));
+	}
+	else{
+		return false;
+	}
+};
+
+/*var eval = function(condition, value, limit)   {
     if(condition == greaterThan) {
         if(value[0] > limit)   {
             sendInfoToTeamTwo();
@@ -39,7 +90,7 @@ var eval = function(condition, value, limit)   {
             sendInfoToTeamTwo();
         }
     }
-};
+};*/
 
 var sendInfoToTeamTwo = function() {
     var jsonObj = {

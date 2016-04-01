@@ -24,17 +24,17 @@ router.post('/conditions', function(req, res, next) {
 
 var eval = function(condition, value, limit)   {
     if(condition == greaterThan) {
-        if(value > limit)   {
+        if(value[0] > limit)   {
             return true;
         }
     }
     else if (condition == lessThan) {
-        if(value < limit)   {
+        if(value[0] < limit)   {
             return true;
         }
     }
     else if(condition == equal) {
-        if(value == limit)  {
+        if(value[0] == limit)  {
             return true;
         }
     }

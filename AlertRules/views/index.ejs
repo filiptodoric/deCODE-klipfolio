@@ -1,3 +1,35 @@
-<html>
-<h1>HELLO WORLD<h1>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<script>
+
+    function send() {
+        var condition = document.getElementById("condition");
+        condition = condition.options[condition.selectedIndex].text;
+        var limit = document.getElementById("limit").value;
+        var name = document.getElementById("name").value;
+        $.post("/web/conditions",
+                {
+                    name: name,
+                    condition: condition,
+                    limit: limit
+                }, 'json');
+    }
+
+</script>
+
+<h1>Alerts<h1>
+        <div id="userInfo">
+            <h6>Condition:
+            <select id="condition">
+                <option value="greater-than"> > </option>
+                <option value="less-than"> < </option>
+                <option value="equal"> = </option>
+            </select>
+            </h6>
+            <h6>Limit: <input id="limit"> </input> </h6>
+            <h6>Name: <input id="name"> </input> </h6>
+        </div>
+
+        <button onclick="send()">Submit</button>
 </html>

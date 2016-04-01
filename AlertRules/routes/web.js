@@ -26,17 +26,17 @@ router.post('/conditions', function(req, res, next) {
 var eval = function(condition, value, limit)   {
     if(condition == greaterThan) {
         if(value[0] > limit)   {
-            return true;
+            sendInfoToTeamTwo();
         }
     }
     else if (condition == lessThan) {
         if(value[0] < limit)   {
-            return true;
+            sendInfoToTeamTwo();
         }
     }
     else if(condition == equal) {
         if(value[0] == limit)  {
-            return true;
+            sendInfoToTeamTwo();
         }
     }
 };
@@ -58,6 +58,6 @@ var sendInfoToTeamTwo = function() {
     }, function(error, response, body) {
         console.log(response);
     })
-}
+};
 
 module.exports = router;

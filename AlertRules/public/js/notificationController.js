@@ -9,7 +9,8 @@ define(function () {
         $scope._url = "http://localhost:3000/web/availableEndPoints";
         
         $scope.notification = {
-            "type": ''
+            "type": '',
+            "phoneNumber": ''
         }
         
         $scope.onNotificationSelect = function(type) {
@@ -79,6 +80,10 @@ define(function () {
             {
                 name: "facebook",
 				templateUrl: "templates/slack.html" 
+            },
+            {
+                name: "SMS",
+                templateUrl: "templates/sms.html"
             }
 		];
         

@@ -19,20 +19,6 @@ var genJSON = function() {
 
 
 router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
-<<<<<<< HEAD
-	var title = req.body.conditionConfig[0].title;
-    var message = req.body.conditionConfig[0].message;
-    var condition = req.body.conditionConfig[0].condition;
-	//data that will set the limit of the data
-	var limit = parseInt(req.body.conditionConfig.value);
-    var valueJSON = genJSON();
-	if(data.evalulate(condition,valueJSON,limit)){
-		notifications.sendSlack(message);
-	}
-    var value = valueJSON.data;
-=======
-
-
     var title = req.body.messageConfig[0].title;
     var message = req.body.messageConfig[0].message;
     var condition = req.body.messageConfig[0].condition;
@@ -49,7 +35,7 @@ router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
     // notifications.sendSlack(message);
     // }
     // var value = valueJSON.data;
->>>>>>> 988ab728e89bba4934d49e774e49da8e4af67ee4
+
 
     // save to db
     req.user.customData.message = message;
@@ -63,13 +49,11 @@ router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
     res.send('Success');
 });
 
-<<<<<<< HEAD
-=======
 
 router.get('/availableEndPoints', function(req, res, next) {});
 //    var selection = req.body.selection;
 
->>>>>>> 988ab728e89bba4934d49e774e49da8e4af67ee4
+
 router.post('/availableEndPoints', function(req, res, next) {
     var selection = req.body.selection;
     request({
@@ -99,51 +83,6 @@ function loadUser(req, res)  {
     }
 }
 
-<<<<<<< HEAD
-=======
-//condition 	: (String) that agrees with one fo the constants
-//value			: (object) data[]
-//limit			: (object) limit[]
-var eval = function(condition, value, limit){
-    //what the rest api calls for the compare operators
-    const greaterThan = ">";
-    const lessThan = "<";
-    const equal = "=";
-    const notEqual = "!=";
-    const lessThanEqual = "<=";
-    const greaterThanEqual = ">=";
-    const contains = "exist";
-    const doesNotContain = "notExist";
-
-    //compare functions
-    if(condition === greaterThan) {
-        return (parseInt(value.data[0]) > parseInt(limit.data));
-    }
-    else if (condition === lessThan) {
-        return (parseInt(value.data[0]) < parseInt(limit.data));
-    }
-    else if(condition === equal) {
-        return _.isEqual(value,limit);
-    }
-    else if(condition == notEqual){
-        return !(_.isEqual(value,limit));
-    }
-    else if(condition === lessThanEqual){
-        return (parseInt(value.data[0]) <= parseInt(limit.data));
-    }
-    else if(condition === greaterThanEqual){
-        return (parseInt(value.data[0]) >= parseInt(limit.data));
-    }
-    else if (condition === contains){
-        return _.has(value,limit);
-    }
-    else if(condition === doesNotContain){
-        return !(_.has(value,limit));
-    }
-    else	{
-        return false;
-    }
-};
 
 var sendInfoToTeamTwo = function(body) {
     var jsonObj = {
@@ -166,5 +105,4 @@ var sendInfoToTeamTwo = function(body) {
     })
 };
 
->>>>>>> 988ab728e89bba4934d49e774e49da8e4af67ee4
 module.exports = router;

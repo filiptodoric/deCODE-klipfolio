@@ -23,7 +23,7 @@ require(['mainController', 'conditionController', 'notificationController', 'sou
 		console.log(this.config);
 	};
 
-	sendService.prototype.sendNotification = function (notification){
+	sendService.prototype.sendNotifications = function (notification){
 		this.config.notificationConfig = notification;
 		console.log(this.config);
 	};

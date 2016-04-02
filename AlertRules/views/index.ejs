@@ -22,16 +22,28 @@
 	    </div>
 
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	      <li><a href="http://localhost:3000" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 	    </ul>
 	  </div>
 	</nav>
 	  <form>
-	  	<h1>Alert Rules</h1>
-	  		<div>
-
-		  		<div ng-controller="conditionController"  class="condition-block">
-			  	<button class="btn btn-small" ng-click="addCondition()">Add a condition</button><br> <br>
+	  	<div class="page-header">
+	  		<h1>Alert Rules</h1>
+	  	</div>
+			<div class="source-block">
+	  		<h3>Source</h3>
+			  	<div ng-controller="sourceController">
+						<select ng-options="source.name for source in sources" ng-model="selected">
+						</select>
+						<br>
+						<ng-include src="selected.templateUrl">
+						</ng-include>
+				</div>
+			</div>
+	  		<div ng-controller="conditionController" style="position:relative">
+				<h3>Conditions</h3>
+			  	<button class="btn btn-small right-button" ng-click="addCondition()">Add a condition</button>
+		  		<div class="condition-block">
 			  		<div class="row">
 					<div class="col-xs-2">
 					  <label for="ex1">Key</label>
@@ -55,15 +67,19 @@
 		  			
 				  		<ng-include src="'templates/condition.html'"></ng-include>
 		  				
-				  	</div>
-		  		<button class="btn btn-small" ng-click="sendConfig(config)">Submit</button>
-		  		</div>
+				</div>
+				<br>
+		  		<button class="btn btn-primary btn-small" ng-click="sendConfig(body)">Submit</button>
 
+		  		</div>
+	  		</div>
+	  		<div class="sourceBlock">
+	  		<h3>Notifications</h3>
 			  	<div ng-controller="notificationController">
 				  		<ng-include src="'templates/notificationconfig.html'"></ng-include>
 			  	</div>
-
 	  		</div>
+	  		
   	</form>
   </div>
 

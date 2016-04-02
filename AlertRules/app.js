@@ -10,7 +10,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var web = require('./routes/web');
 var PropertiesReader = require('properties-reader');
-var properties = PropertiesReader('AlertRules/apiKey.properties');
+var properties = PropertiesReader('apiKey.properties');
 var stormpath = require('express-stormpath');
 
 var id = properties.get('apiKey.id');

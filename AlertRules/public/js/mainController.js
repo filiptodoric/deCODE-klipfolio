@@ -6,8 +6,8 @@ define(function () {
 		this._scope = $scope;
 	 	this.url = "http://localhost:3000/web/conditions";
 	 	this.logoutUrl = "http://localhost:3000/logout";
-		$scope.sendConfig = function(config){
-	    	_this.sendConfig(config);
+		$scope.send= function(ConditionConfig, NotifConfig){
+	    	_this.sendConfig(ConditionConfig, NotifConfig);
 	  	};
 	  	$scope.logout = function() {
 	  		_this.logout();
@@ -19,6 +19,7 @@ define(function () {
 			conditionConfig:ConditionConfig,
 			notifConfig: NotifConfig
 		}
+		console.log(config);
 		this._http.post(this.url, config).then( function () {
 			console.log("success");
 		}, function () {
@@ -27,7 +28,7 @@ define(function () {
 	};
 
 	controller.prototype.logout = function (){
-		this._http.post(this.logoutUrl, null).then( function () {
+		this._http.post(this.logoutUrl).then( function () {
 			console.log("success");
 		}, function () {
 			console.log("error");

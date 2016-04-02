@@ -17,19 +17,72 @@
     }
 
 </script>
-
-<h1>User Alerts</h1>
-        <div id="userInfo">
-            <h6>Condition:
-                <select id="condition">
-                    <option value="greater-than"> > </option>
-                    <option value="less-than"> < </option>
-                    <option value="equal"> = </option>
-                </select>
-            </h6>
-            <h6>Limit: <input id="limit"> </input> </h6>
-            <h6>Name: <input id="name"> </input> </h6>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alert Rules</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="js/require.js" data-main="js/main.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </head>
+  <body>
+  
+  <div class="container" ng-controller="mainController">
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Alert Rules</a>
         </div>
 
-        <button onclick="send()">Submit</button>
+        <ul class="nav navbar-nav navbar-right">
+          <li ><a ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+      <form>
+        <h1>Alert Rules</h1>
+            <div>
+                
+                <button class="btn btn-small" ng-click="logout()">logout</button><br>
+                <div ng-controller="conditionController"  class="condition-block">
+                <button class="btn btn-small" ng-click="addCondition()">Add a condition</button><br> <br>
+                    <div class="row">
+                    <div class="col-xs-2">
+                      <label for="ex1">Key</label>
+                    </div>
+                    <div class="col-xs-1">
+                      <label for="ex1">Condition</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <label for="ex3">Value</label>
+                    </div>
+                    <div class="col-xs-3">
+                      <label for="ex3">Title</label>
+                    </div>
+                    <div class="col-xs-3">
+                      <label for="ex3">Message</label>
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                    </div class="row">
+                    <div ng-repeat="condition in body">
+                    
+                        <ng-include src="'templates/condition.html'"></ng-include>
+                        
+                    </div>
+                <button class="btn btn-small" ng-click="sendConfig(config)">Submit</button>
+                </div>
+
+                <div ng-controller="notificationController">
+                        <ng-include src="'templates/notificationconfig.html'"></ng-include>
+                </div>
+
+            </div>
+    </form>
+  </div>
+  </body>
 </html>

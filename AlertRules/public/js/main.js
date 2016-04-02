@@ -1,4 +1,4 @@
-require(['mainController', 'conditionController', 'notificationController'], function (mainController, conditionController, notificationController) {
+require(['mainController', 'conditionController', 'notificationController', 'sourceController'], function (mainController, conditionController, notificationController, sourceController) {
 
 	var app = angular.module('mainModule', []);
 
@@ -8,6 +8,7 @@ require(['mainController', 'conditionController', 'notificationController'], fun
 	app.controller('mainController', mainController);
 	app.controller('conditionController', conditionController);
 	app.controller('notificationController', notificationController);
+	app.controller('sourceController', sourceController);
 
 
   	angular.bootstrap(document, ['mainModule']);

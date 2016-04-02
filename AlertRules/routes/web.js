@@ -18,15 +18,17 @@ var genJSON = function() {
 };
 
 router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
-    var message = req.body.message;
-    var condition = req.body.condition;
-    var limit = {'data': req.body.value};
-
+	var title = req.body.conditionConfig[0].title;
+    var message = req.body.conditionConfig[0].message;
+    var condition = req.body.conditionConfig[0].condition;
+    var limit = {'data': req.body.conditionConfig.value};
+    console.log(req.body);
 	//data that will set the limit of the data
-	var limit = parseInt(req.body.value);
+	var limit = parseInt(req.body.conditionConfig.value);
     var valueJSON = genJSON();
 	if(data.evalulate(condition,valueJSON,limit)){
 		notifications.sendSlack(message);
+	}
     var value = valueJSON.data;
 
     // save to db

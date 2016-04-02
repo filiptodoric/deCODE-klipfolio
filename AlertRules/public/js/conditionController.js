@@ -1,9 +1,10 @@
 define(function () {
     //Do setup work here
-    var conditionController = function ($scope, $http) {
+    var conditionController = function ($scope, $http, sendService) {
 		var _this = this;
 		this._scope = $scope;
 		this._http = $http;
+		this.sendService = sendService;
 		$scope.body = [{
 			key: "",
 			value: "",
@@ -15,7 +16,9 @@ define(function () {
 			"<", 
 			"=", 
 			">",
-			"<="
+			"<=",
+			">=",
+			"contains"
 		];
 		$scope.notificationConfigs = [{
 		}];
@@ -29,8 +32,8 @@ define(function () {
 	  	$scope.conditionTypePicked = function(element, condition) {
 	  		_this.conditionTypePicked(element, condition);
 	  	};
-	  	$scope.sendConfig = function(config){
-	    	_this.sendConfig(config);
+	  	$scope.sendConditions = function(config){
+	    	sendService.sendConditions(config);
 	  	};
 	};
 

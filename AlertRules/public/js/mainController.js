@@ -1,13 +1,13 @@
 define(function () {
     //Do setup work here
-    var controller = function ($scope, $http) {
+    var controller = function ($scope, $http, sendService) {
 		var _this = this;
 		this._http = $http;
 		this._scope = $scope;
 	 	this.url = "http://localhost:3000/web/conditions";
 	 	this.logoutUrl = "http://localhost:3000/logout";
-		$scope.send= function(ConditionConfig, NotifConfig){
-	    	_this.sendConfig(ConditionConfig, NotifConfig);
+		$scope.send= function(){
+	    	sendService.send();
 	  	};
 	  	$scope.logout = function() {
 	  		_this.logout();

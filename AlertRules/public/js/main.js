@@ -1,32 +1,12 @@
-var app = angular.module('mainModule', []);
+require(['conditionController', 'notificationController'], function (conditionController, notificationController) {
 
-var mainController = function ($scope, $http) {
-	var _this = this;
-	this._http = $http;
-	this._scope = $scope;
-	$scope.title = "Alert Rules";
+	var app = angular.module('mainModule', []);
 
- 	this.url = "http://localhost:3000/web/conditions";
-	$scope.sendConfig = function(config){
-    	_this.sendConfig(config);
-  	};
-};
+	conditionController.$inject= ['$scope', '$http'];
+	notificationController.$inject= ['$scope'];
+	app.controller('conditionController', conditionController);
+	app.controller('notificationController', notificationController);
 
-mainController.prototype.sendConfig = function (config){
-	this._http.post(this.url, config).then( function () {
-		console.log("success");
-	}, function () {
-		console.log("error");
-	});
-};
 
-var httpService = function ($http)
- {
- 	var _this = this;
- 	this.url = "http://localhost:3000/web/conditions";
- 	var post = function (config){
- 		_this.post(config);
- 	}
-};
-mainController.$inject= ['$scope', '$http'];
-app.controller('mainController', mainController);
+  	angular.bootstrap(document, ['mainModule']);
+});

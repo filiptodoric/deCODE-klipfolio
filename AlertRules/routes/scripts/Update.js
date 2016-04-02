@@ -2,8 +2,8 @@
 var moment = require('moment');
 var request = require('request');
 var twitter = require('twitter');
-
 var data = require('./Evalulate.js');
+var past_id = NaN;
 
 exports.dataBase = function(){
 	
@@ -18,7 +18,15 @@ exports.dataBase = function(){
 	var query = 'to:'+user;
 	
 	client.get('search/tweets', {q: query}, function(error, tweets, response){
-		console.log(tweets.statuses);
+		if(!isNaN(past_id) || tweets.statuses[0].id != past_id){	
+			console.log("working here");
+			console.log(tweets.statuses[0].favourites_count);
+			console.log(data.evalulate('>=',tweets.statuses[0].favourites_count,0));
+			if(data.evalulate('>=',tweets.statuses[0].favourites_count,0)){
+				console.log("Something");
+			}
+			//console.log(tweets.statuses);
+		}
 	});
 	console.log("updated:" + moment().format());
 }

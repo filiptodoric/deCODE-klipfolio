@@ -1,6 +1,23 @@
+<!--
 <br>
 <select ng-options="notification.name for notification in notificationTypes" ng-model="selected">
 </select>
 <br>
 <ng-include src="selected.templateUrl">
 </ng-include>
+-->
+
+<br>
+<select ng-options="service.name for service in allServiceData" ng-model="selected">
+</select>
+<br>
+
+{{selected}}
+
+
+<br>
+<br>
+
+<div>
+    <form sf-schema="schema" sf-form="form" sf-model="model"></form>
+</div>

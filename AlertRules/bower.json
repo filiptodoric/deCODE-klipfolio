@@ -1,0 +1,18 @@
+{
+  "name": "AlertRules",
+  "description": "test",
+  "main": "bower.json",
+  "license": "MIT",
+  "homepage": "https://github.com/filiptodoric/deCODE-klipfolio",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

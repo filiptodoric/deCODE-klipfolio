@@ -1,6 +1,9 @@
 var express = require('express');
+var _ = require('underscore');
 var request = require('request');
 var router = express.Router();
+var stormpath = require('express-stormpath');
+
 
 var data = require('./scripts/Evalulate.js');
 var notifications = require("./scripts/Notifications");
@@ -8,25 +11,33 @@ var update = require("./scripts/Update");
 
 var jsonObj = {'data': []};
 
-setInterval(function(){ update.dataBase()}, 30000);
+setInterval(function(){ update.dataBase()}, 15000);
 
 var genJSON = function() {
-    
-	//instead of gererating a json, get the jason as data and convert it to a number
-	object = 100;
-	//jsonObj.data[jsonObj.data.length] = [100];
-	//jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
-    return object;
+    jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
+    return jsonObj;
 };
 
-router.post('/conditions', function(req, res, next) {
-    var message = req.body.message;
-    var condition = req.body.condition;
+router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
+	var title = req.body.conditionConfig[0].title;
+    var message = req.body.conditionConfig[0].message;
+    var condition = req.body.conditionConfig[0].condition;
 	//data that will set the limit of the data
-	var limit = parseInt(req.body.value);
+	var limit = parseInt(req.body.conditionConfig.value);
     var valueJSON = genJSON();
 	if(data.evalulate(condition,valueJSON,limit)){
 		notifications.sendSlack(message);
+	}
+    var value = valueJSON.data;
+
+    // save to db
+    req.user.customData.message = message;
+    req.user.customData.condition = condition;
+    req.user.customData.limit = limit;
+    req.user.customData.save();
+
+	if(eval(condition, valueJSON, limit)){
+		sendInfoToTeamTwo(message);
 	}
     res.send('Success');
 });
@@ -43,6 +54,21 @@ router.post('/availableEndPoints', function(req, res, next) {
         var test = JSON.parse(body);
         res.send(body);
     });
-});         
+});
+
+
+router.get('/getUser', stormpath.loginRequired, function(req, res) {
+    loadUser(req, res);
+});
+
+function loadUser(req, res)  {
+    var userData = req.user.customData;
+    if (userData != null || userData != undefined) {
+        var userData = req.user.customData;
+        res.send(userData);
+    } else {
+        res.status(200).send([]);
+    }
+}
 
 module.exports = router;

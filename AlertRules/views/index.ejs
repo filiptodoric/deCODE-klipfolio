@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,17 +18,57 @@
 <!--    <script type="text/javascript" src="js/bower_components/objectpath/lib/ObjectPath.js"></script>-->
 <!--    <script type="text/javascript" src="js/bower_components/angular-schema-form/dist/schema-form.min.js"></script>-->
 <!--    <script type="text/javascript" src="js/bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>-->
-      
 
+	  <script>
+		  var user = null;
+		  function getUser()  {
+			  $.ajax({
+				  type: "GET",
+				  url: '/web/getUser',
+				  contentType: 'json',
+				  success: function(data) {
+					  user = data;
+				  },
+				  error: function(data)    {
+					  console.error(data)
+					  user = [];
+				  }
+			  });
+		  }
+	  </script>
   </head>
   <body>
+  
   <div class="container" ng-controller="mainController">
-	  <form>
-	  	<h1>Alert Rules</h1>
-	  		<div>
+  <nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Alert Rules</a>
+	    </div>
 
-		  		<div ng-controller="conditionController"  class="condition-block">
-			  	<button class="btn btn-small" ng-click="addCondition()">Add a condition</button><br> <br>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="http://localhost:3000" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	  <form>
+	  	<div class="page-header">
+	  		<h1>Alert Rules</h1>
+	  	</div>
+			<div class="source-block">
+	  		<h3>Source</h3>
+			  	<div ng-controller="sourceController">
+						<select ng-options="source.name for source in sources" ng-model="selected">
+						</select>
+						<br>
+						<ng-include src="selected.templateUrl">
+						</ng-include>
+				</div>
+			</div>
+	  		<div ng-controller="conditionController" style="position:relative">
+				<h3>Conditions</h3>
+			  	<button class="btn btn-small right-button" ng-click="addCondition()">Add a condition</button>
+		  		<div class="condition-block">
 			  		<div class="row">
 					<div class="col-xs-2">
 					  <label for="ex1">Key</label>
@@ -53,16 +92,19 @@
 		  			
 				  		<ng-include src="'templates/condition.html'"></ng-include>
 		  				
-				  	</div>
-				  	{{body}}
-		  		<button class="btn btn-small" ng-click="sendConfig(config)">Submit</button>
-		  		</div>
+				</div>
+				<br>
+		  		<button class="btn btn-primary btn-small" ng-click="sendConfig(body)">Submit</button>
 
+		  		</div>
+	  		</div>
+	  		<div class="sourceBlock">
+	  		<h3>Notifications</h3>
 			  	<div ng-controller="notificationController">
 				  		<ng-include src="'templates/notificationconfig.html'"></ng-include>
 			  	</div>
-
 	  		</div>
+	  		
   	</form>
   </div>
 

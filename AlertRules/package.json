@@ -16,11 +16,16 @@
     "express-stormpath": "^3.1.2",
     "gulp": "^3.9.1",
     "jade": "~1.11.0",
+    "moment": "^2.12.0",
     "morgan": "~1.6.1",
     "objectpath": "^1.2.1",
     "request": "^2.69.0",
     "serve-favicon": "~2.3.0",
     "tv4": "^1.2.7",
+    "properties-reader": "0.0.15",
+    "request": "^2.69.0",
+    "serve-favicon": "~2.3.0",
+    "twitter": "^1.2.5",
     "underscore": "^1.8.3"
   }
 }

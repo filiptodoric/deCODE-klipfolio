@@ -1,15 +1,21 @@
 define(function () {
     //Do setup work here
-    var conditionController = function ($scope) {
+    var conditionController = function ($scope, $http) {
 		var _this = this;
 		this._scope = $scope;
+		this._http = $http;
 		$scope.body = [{
 			key: "",
 			value: "",
 			condition: "",
 			message: ""
 		}];
-		$scope.conditionTypes = ["<", "=", ">"
+		$scope.conditionTypes = 
+		[
+			"<", 
+			"=", 
+			">",
+			"<="
 		];
 		$scope.notificationConfigs = [{
 		}];
@@ -23,9 +29,14 @@ define(function () {
 	  	$scope.conditionTypePicked = function(element, condition) {
 	  		_this.conditionTypePicked(element, condition);
 	  	};
+	  	$scope.sendConfig = function(config){
+	    	_this.sendConfig(config);
+	  	};
 	};
 
 	conditionController.prototype.sendConfig = function (config){
+		
+		console.log(config);
 		this._http.post(this.url, config).then( function () {
 			console.log("success");
 		}, function () {

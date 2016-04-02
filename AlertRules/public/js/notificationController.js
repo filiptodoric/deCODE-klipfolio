@@ -8,8 +8,15 @@ define(function () {
         $scope.allServiceData = {};
         $scope._url = "http://localhost:3000/web/availableEndPoints";
         
+        $scope.notification = {
+            "type": ''
+        }
+        
+        $scope.onNotificationSelect = function(type) {
+            $scope.notification.type = type.name;
+        }
+        
         $scope.getServices = function() {
-            var deferred = $q.defer();
             var request = $http({
                 method: "post",
                 url: $scope._url
@@ -29,39 +36,36 @@ define(function () {
             $scope.allServiceData = services;
             for(elem in services) {
                 $scope.serviceDropDown[$scope.serviceDropDown.length] = services[elem].name;
-                console.log(services[elem].name);
             }
-            console.log($scope.serviceDropDown);
+            $scope.selected = services[0];
         }
         
+//        $scope.test = function(data) {
+//            
+//        }
         
-        
-        
-        $scope.schema = {
-            type: 'object',
-            properties: {
-                name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
-                title: {
-                    type: "string",
-                    enum: ['dr','jr','sir','mrs','mr','NaN','dj']
-                }
-            }
-        };
-        
-        $scope.form = [
-            "*",
-            {
-                type: "submit",
-                title: "save"
-            }
-        ];
-        
-        $scope.model = {};
-        
-        
-        
-        
-        
+ 
+//        $scope.schema = {
+//            type: 'object',
+//            properties: {
+//                name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
+//                title: {
+//                    type: "string",
+//                    enum: ['dr','jr','sir','mrs','mr','NaN','dj']
+//                }
+//            }
+//        };
+//        
+//        $scope.form = [
+//            "*",
+//            {
+//                type: "submit",
+//                title: "save"
+//            }
+//        ];
+//        
+//        $scope.model = {};
+ 
 		$scope.body = "notif info here";
 		$scope.notificationTypes = [
 			{
@@ -69,13 +73,13 @@ define(function () {
 				templateUrl: "templates/slack.html"
 			},
 			{
-				name: "webhooks",
-				templateUrl: "templates/webhooks.html"
-			},
-			{
-				name: "email",
+				name: "twitter",
 				templateUrl: "templates/slack.html"
-			}
+			},
+            {
+                name: "facebook",
+				templateUrl: "templates/slack.html" 
+            }
 		];
         
         $scope.getServices();

@@ -1,13 +1,9 @@
 <div class="row condition-row" style="padding-top: 10px">
-<div class="col-xs-5">
+<div class="col-xs-10">
   <label>Username</label>
-  <input class="form-control" id="ex1" type="text" ng-model="condition.key" >
-</div>
-<div class="col-xs-5">
-  <label>Hashtag</label>
-  <input class="form-control" id="ex3" type="text" ng-model="condition.value" >
+  <input class="form-control" id="ex1" type="text" ng-model="selectedUser" >
 </div>
 <div class="col-xs-2" style="padding-top:20px">
-  <button type="button" class="btn btn-primary" ng-click="deleteCondition(condition)">Save</button>
+  <button type="button" class="btn btn-primary" ng-click="sendSource(selectedSource.name,selectedUser )">Save</button>
 </div>
 </div class="row">

@@ -1,9 +1,11 @@
 define(function () {
     //Do setup work here
-    var controller = function ($scope, $http) {
+    var controller = function ($scope, $http, sendService) {
 		
 		this._scope = $scope;
 		this._http = $http
+		this.sendService = sendService;
+		var _this=this;
 		$scope.sources = [
 			{
 				name: "Twitter",
@@ -30,21 +32,18 @@ define(function () {
 				templateUrl: "templates/stockSource.html"
 			}
 		];
+		$scope.sendSource = function(type, user) {
+			_this.sendSource(type, user);
+		};
 	};
 
-	controller.sendSource = function (Type, source) {
+	controller.prototype.sendSource = function (Type, user) {
 		params = {
 			type: Type,
-			hashtag: source.hashtag,
-			username:source.hashtag
+			username: user,
 		}
-
 		console.log(params);
-		this._http.post(this.url, params).then( function () {
-			console.log("success");
-		}, function () {
-			console.log("error");
-		});
+		this.sendService.sendSource(params);
 	}
 
     return controller;

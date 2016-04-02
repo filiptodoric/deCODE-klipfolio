@@ -15,17 +15,20 @@ exports.dataBase = function(){
 		access_token_key: 		'1323295472-OtqWDhMJuZpQMKNvCkOeHPd9ANKzYbBbqPtET9o',
 		access_token_secret:	 '15hlcbNht1oeSns0oMt04tE0ZdSaw9ktTekaKtl0utrA4'
 	});
-	var user = 'nasa';
+	var user = 'KlipfolioDecode';
 	var query = 'to:'+user;
-	
+	var hashtag = "#decode";
+
 	client.get('search/tweets', {q: query}, function(error, tweets, response){
 		if(tweets.statuses === undefined){
 				return;
 		}
 		if(tweets.statuses[0].id != past_id){
 			if(data.evalulate('>=',tweets.statuses[0].favorite_count,0)){
-				console.log(tweets.statuses[0].text);
-				notifications.sendSlack(tweets.statuses[0].text);
+				var tweet = tweets.statuses[0].text;
+				if(tweet.toLowerCase().indexOf(hashtag) > -1)	{
+					notifications.sendSlack(tweets.statuses[0].text);
+				}
 				past_id = tweets.statuses[0].id;
 			}
 		}

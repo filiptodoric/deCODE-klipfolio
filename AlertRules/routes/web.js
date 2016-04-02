@@ -4,6 +4,7 @@ var request = require('request');
 var router = express.Router();
 var stormpath = require('express-stormpath');
 
+
 var data = require('./scripts/Evalulate.js');
 var notifications = require("./scripts/Notifications");
 var update = require("./scripts/Update");
@@ -25,8 +26,9 @@ router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
 	//data that will set the limit of the data
 	var limit = parseInt(req.body.value);
     var valueJSON = genJSON();
-	if(data.evalulate(condition,valueJSON,limit)){
-		notifications.sendSlack(message);
+	if(data.evalulate(condition,valueJSON,limit)) {
+        notifications.sendSlack(message);
+    }
     var value = valueJSON.data;
 
     // save to db
@@ -60,8 +62,21 @@ router.post('/availableEndPoints', function(req, res, next) {
         res.send(body);
     });
 });
-            
-            
+
+
+router.get('/getUser', stormpath.loginRequired, function(req, res) {
+    loadUser(req, res);
+});
+
+function loadUser(req, res)  {
+    var userData = req.user.customData;
+    if (userData != null || userData != undefined) {
+        var userData = req.user.customData;
+        res.send(userData);
+    } else {
+        res.status(200).send([]);
+    }
+}
 
 //condition 	: (String) that agrees with one fo the constants
 //value			: (object) data[]

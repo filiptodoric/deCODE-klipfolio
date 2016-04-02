@@ -11,6 +11,23 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 	<script src="js/require.js" data-main="js/main.js"></script>
     <script src="js/bootstrap.js"></script>
+	  <script>
+		  var user = null;
+		  function getUser()  {
+			  $.ajax({
+				  type: "GET",
+				  url: '/web/getUser',
+				  contentType: 'json',
+				  success: function(data) {
+					  user = data;
+				  },
+				  error: function(data)    {
+					  console.error(data)
+					  user = [];
+				  }
+			  });
+		  }
+	  </script>
   </head>
   <body>
   <div class="container" ng-controller="mainController">

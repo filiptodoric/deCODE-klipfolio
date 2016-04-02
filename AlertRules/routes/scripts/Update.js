@@ -19,13 +19,9 @@ exports.dataBase = function(){
 	
 	client.get('search/tweets', {q: query}, function(error, tweets, response){
 		if(!isNaN(past_id) || tweets.statuses[0].id != past_id){	
-			console.log("working here");
-			console.log(tweets.statuses[0].favourites_count);
-			console.log(data.evalulate('>=',tweets.statuses[0].favourites_count,0));
-			if(data.evalulate('>=',tweets.statuses[0].favourites_count,0)){
-				console.log("Something");
+			if(data.evalulate('>=',tweets.statuses[0].favorite_count,0)){
+				console.log("Number of favs on tweet is: " + tweets.statuses[0].favorite_count);
 			}
-			//console.log(tweets.statuses);
 		}
 	});
 	console.log("updated:" + moment().format());

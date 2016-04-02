@@ -8,7 +8,7 @@ var update = require("./scripts/Update");
 
 var jsonObj = {'data': []};
 
-setInterval(function(){ update.dataBase()}, 30000);
+setInterval(function(){ update.dataBase()}, 3000);
 
 var genJSON = function() {
     

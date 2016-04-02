@@ -1,9 +1,11 @@
-require(['conditionController', 'notificationController'], function (conditionController, notificationController) {
+require(['mainController', 'conditionController', 'notificationController'], function (mainController, conditionController, notificationController) {
 
 	var app = angular.module('mainModule', []);
 
-	conditionController.$inject= ['$scope', '$http'];
-	notificationController.$inject= ['$scope'];
+	mainController.$inject = ['$scope', '$http']
+	conditionController.$inject = ['$scope', '$http'];
+	notificationController.$inject= ['$scope', '$http'];
+	app.controller('mainController', mainController);
 	app.controller('conditionController', conditionController);
 	app.controller('notificationController', notificationController);
 

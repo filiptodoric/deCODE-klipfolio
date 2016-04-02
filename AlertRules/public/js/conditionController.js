@@ -1,8 +1,7 @@
 define(function () {
     //Do setup work here
-    var conditionController = function ($scope, $http) {
+    var conditionController = function ($scope) {
 		var _this = this;
-		this._http = $http;
 		this._scope = $scope;
 		$scope.body = [{
 			key: "",
@@ -10,17 +9,19 @@ define(function () {
 			condition: "",
 			message: ""
 		}];
+		$scope.conditionTypes = ["<", "=", ">"
+		];
 		$scope.notificationConfigs = [{
 		}];
 	 	this.url = "http://localhost:3000/web/conditions";
-		$scope.sendConfig = function(config){
-	    	_this.sendConfig(config);
-	  	};
 	  	$scope.addCondition = function(){
 	    	_this.addCondition();
 	  	};
 	  	$scope.deleteCondition = function(){
 	    	_this.deleteCondition();
+	  	};
+	  	$scope.conditionTypePicked = function(element, condition) {
+	  		_this.conditionTypePicked(element, condition);
 	  	};
 	};
 
@@ -41,6 +42,11 @@ define(function () {
 		};
 
 		this._scope.body.push(condition);
+	}
+
+	conditionController.prototype.conditionTypePicked = function (element, condition) {
+		var index = this._scope.body.indexOf(element)
+		this._scope.body[index].condition = condition;
 	}
 
 	conditionController.prototype.deleteCondition = function (condition) {

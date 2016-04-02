@@ -1,1 +1,6 @@
-<h1>{{body}}</h1>
+<br>
+<select ng-options="notification.name for notification in notificationTypes" ng-model="selected">
+</select>
+<br>
+<ng-include src="selected.templateUrl">
+</ng-include>

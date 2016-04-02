@@ -16,11 +16,7 @@ var genJSON = function() {
 router.post('/conditions', function(req, res, next) {
     var message = req.body.message;
     var condition = req.body.condition;
-<<<<<<< HEAD
-    var limit = [req.body.limit];
-=======
     var limit = {'data': req.body.value};
->>>>>>> d479d0d8f4cc4fe58d459c76ea9911c6feddea01
     var valueJSON = genJSON();
     var value = valueJSON.data;
 	if(eval(condition, valueJSON, limit)){
@@ -29,17 +25,24 @@ router.post('/conditions', function(req, res, next) {
     res.send('Success');
 });
 
-router.post('/availableEndPoints', function(req, res, next) {
-    var selection = req.body.selection;
+
+
+router.get('/availableEndPoints', function(req, res, next) {
+//    var selection = req.body.selection;
     
     request({
-        url: "",
-        method: "POST",
-        json: true
+        url: "https://klipfolio-notifier.herokuapp.com/v1",
+        method: "GET",
+        headers: {
+           'Host': 'klipfolio-notifier.herokuapp.com'
+        }
     }, function(error, response, body) {
-        console.log(response);
+        var test = JSON.parse(body);
+        res.send(body);
     });
-}
+});
+            
+            
 
 //condition 	: (String) that agrees with one fo the constants
 //value			: (object) data[]
@@ -54,18 +57,7 @@ var eval = function(condition, value, limit){
 	const greaterThanEqual = ">=";
 	const contains = "exist";
 	const doesNotContain = "notExist";
-	
-	//if this is true then the objects being compared are not the same object (diffrrent feilds)
-<<<<<<< HEAD
-	if(!(_.isEqual(value.keys(),limit.keys()))){
-        return false;
-	}
     
-=======
-/*	if(!(_.isEqual(value[0].keys(),limit.keys()))){
-			return false;
-	}*/
->>>>>>> d479d0d8f4cc4fe58d459c76ea9911c6feddea01
 	//compare functions
 	if(condition === greaterThan) {
 		return (parseInt(value.data[0]) > parseInt(limit.data));
@@ -96,11 +88,7 @@ var eval = function(condition, value, limit){
 	}
 };
 
-<<<<<<< HEAD
-var sendInfoToTeamTwo = function() {
-=======
 var sendInfoToTeamTwo = function(body) {
->>>>>>> d479d0d8f4cc4fe58d459c76ea9911c6feddea01
     var jsonObj = {
         'message': {
             'title': "Username",

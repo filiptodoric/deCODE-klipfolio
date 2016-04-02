@@ -4,6 +4,7 @@
 logs
 *.log
 *.idea
+apiKey.properties
 npm-debug.log*
 
 # Runtime data

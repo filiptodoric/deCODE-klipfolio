@@ -4,13 +4,14 @@ var request = require('request');
 var router = express.Router();
 var stormpath = require('express-stormpath');
 
+
 var data = require('./scripts/Evalulate.js');
 var notifications = require("./scripts/Notifications");
 var update = require("./scripts/Update");
 
 var jsonObj = {'data': []};
 
-setInterval(function(){ update.dataBase()}, 30000);
+setInterval(function(){ update.dataBase()}, 15000);
 
 var genJSON = function() {
     jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);
@@ -62,8 +63,21 @@ router.post('/availableEndPoints', function(req, res, next) {
         res.send(body);
     });
 });
-            
-            
+
+
+router.get('/getUser', stormpath.loginRequired, function(req, res) {
+    loadUser(req, res);
+});
+
+function loadUser(req, res)  {
+    var userData = req.user.customData;
+    if (userData != null || userData != undefined) {
+        var userData = req.user.customData;
+        res.send(userData);
+    } else {
+        res.status(200).send([]);
+    }
+}
 
 //condition 	: (String) that agrees with one fo the constants
 //value			: (object) data[]

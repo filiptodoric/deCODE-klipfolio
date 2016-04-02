@@ -9,8 +9,16 @@ var request = require('request');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var web = require('./routes/web');
+var PropertiesReader = require('properties-reader');
+var properties = PropertiesReader('AlertRules/apiKey.properties');
+var stormpath = require('express-stormpath');
+
+var id = properties.get('apiKey.id');
+var secret = properties.get('apiKey.secret');
 
 var app = express();
+
+
 
 // view engine setup
 app.engine('html', ejs.renderFile);
@@ -25,9 +33,35 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(stormpath.init(app, {
+  // Optional configuration options.
+  website: true,
+  apiKey: {
+    id: id,
+    secret: secret
+  },
+  application: 'https://api.stormpath.com/v1/accounts/6Ia1CUVpOO9CCmn456vbWl',
+  web: {
+    login: {
+      enabled: true,
+      nextUri: "/user"
+    },
+    register: {
+      autoAuthorize: true,
+      autoLogin: true,
+      nextUri: "/user"
+    }
+  },
+  expand: {
+    customData: true
+  }
+}));
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/web', web);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

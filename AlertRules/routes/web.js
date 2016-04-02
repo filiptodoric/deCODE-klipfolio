@@ -2,10 +2,8 @@ var express = require('express');
 var _ = require('underscore');
 var request = require('request');
 var router = express.Router();
+var stormpath = require('express-stormpath');
 
-const greaterThan = ">";
-const lessThan = "<";
-const equal = "=";
 
 var jsonObj = {'data': []};
 var genJSON = function() {
@@ -13,16 +11,23 @@ var genJSON = function() {
     return jsonObj;
 };
 
-router.post('/conditions', function(req, res, next) {
+router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
     var message = req.body.message;
     var condition = req.body.condition;
     var limit = {'data': req.body.value};
     var valueJSON = genJSON();
     var value = valueJSON.data;
+
+    // save to db
+    req.user.customData.message = message;
+    req.user.customData.condition = condition;
+    req.user.customData.limit = limit;
+    req.user.customData.save();
+
 	if(eval(condition, valueJSON, limit)){
 		sendInfoToTeamTwo(message);
 	}
-    res.send('Success');
+    res.send("Success");
 });
 
 //condition 	: (String) that agrees with one fo the constants
@@ -90,7 +95,7 @@ var sendInfoToTeamTwo = function(body) {
         json: true,
         body: jsonObj
     }, function(error, response, body) {
-        console.log(response);
+        console.log();
     })
 };
 

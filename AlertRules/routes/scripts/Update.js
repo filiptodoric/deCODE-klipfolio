@@ -6,7 +6,7 @@ var data = require('./Evalulate.js');
 var notifications = require("./Notifications");
 var past_id = NaN;
 
-exports.dataBase = function(){
+exports.dataBase = function(username, hash){
 	
 	//make client and user tokes for the feild
 	var client = new twitter({
@@ -15,9 +15,9 @@ exports.dataBase = function(){
 		access_token_key: 		'1323295472-OtqWDhMJuZpQMKNvCkOeHPd9ANKzYbBbqPtET9o',
 		access_token_secret:	 '15hlcbNht1oeSns0oMt04tE0ZdSaw9ktTekaKtl0utrA4'
 	});
-	var user = 'KlipfolioDecode';
+	var user = username;
 	var query = 'to:'+user;
-	var hashtag = "#decode";
+	var hashtag = hash;
 
 	client.get('search/tweets', {q: query}, function(error, tweets, response){
 		if(tweets.statuses === undefined){

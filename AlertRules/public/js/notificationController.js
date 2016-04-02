@@ -1,6 +1,6 @@
 define(function () {
     //Do setup work here
-    var controller = function ($scope, $http, $q) {
+    var controller = function ($scope, $http, sendService) {
 		
 		this._scope = $scope;
 		this._http = $http;
@@ -69,7 +69,7 @@ define(function () {
 		$scope.body = "notif info here";
 		$scope.notificationTypes = [
 			{
-				name: "slack",
+				name: "Slack",
 				templateUrl: "templates/slack.html"
 			},
 			{
@@ -84,6 +84,10 @@ define(function () {
         
         $scope.getServices();
 			
+		$scope.sendNotifications = function(config){
+	    	sendService.sendNotifications(config);
+	  	};
+
 	};
 
     return controller;

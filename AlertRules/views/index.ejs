@@ -47,7 +47,7 @@
 	    </div>
 
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="http://localhost:3000" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	      <li><a href="http://localhost:3000" ng-click="logout()"> Logout</a></li>
 	    </ul>
 	  </div>
 	</nav>
@@ -58,11 +58,13 @@
 			<div class="source-block">
 	  		<h3>Source</h3>
 			  	<div ng-controller="sourceController">
-						<select ng-options="source.name for source in sources" ng-model="selected">
+						<select ng-options="source.name for source in sources" ng-model="selectedSource">
 						</select>
 						<br>
-						<ng-include src="selected.templateUrl">
+						<ng-include src="selectedSource.templateUrl">
 						</ng-include>
+						<br>
+  					<button type="button" class="btn btn-primary" ng-click="sendSource(selectedSource.name,selectedUser )">Save</button>
 				</div>
 			</div>
 	  		<div ng-controller="conditionController" style="position:relative">
@@ -94,7 +96,7 @@
 		  				
 				</div>
 				<br>
-		  		<button class="btn btn-primary btn-small" ng-click="sendConfig(body)">Submit</button>
+		  		<button class="btn btn-primary btn-small" ng-click="sendConditions(body)">Save</button>
 
 		  		</div>
 	  		</div>
@@ -102,9 +104,14 @@
 	  		<h3>Notifications</h3>
 			  	<div ng-controller="notificationController">
 				  		<ng-include src="'templates/notificationconfig.html'"></ng-include>
+				  		<br>
+		  				<button class="btn btn-primary btn-small" ng-click="sendNotifications(notification)">Save</button>
 			  	</div>
+
 	  		</div>
-	  		
+	  		<br>
+	  		<br>
+		<button class="btn btn-primary btn-small" ng-click="send()">Submit</button>
   	</form>
   </div>
 

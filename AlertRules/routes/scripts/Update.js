@@ -3,6 +3,7 @@ var moment = require('moment');
 var request = require('request');
 var twitter = require('twitter');
 var data = require('./Evalulate.js');
+var notifications = require("./Notifications");
 var past_id = NaN;
 
 exports.dataBase = function(){
@@ -14,13 +15,14 @@ exports.dataBase = function(){
 		access_token_key: '1323295472-OtqWDhMJuZpQMKNvCkOeHPd9ANKzYbBbqPtET9o',
 		access_token_secret: '15hlcbNht1oeSns0oMt04tE0ZdSaw9ktTekaKtl0utrA4'
 	});
-	var user = 'nasa';
+	var user = 'LegacyCan';
 	var query = 'to:'+user;
 	
 	client.get('search/tweets', {q: query}, function(error, tweets, response){
-		if(!isNaN(past_id) || tweets.statuses[0].id != past_id){	
+		if(tweets.statuses[0].id != past_id){	
 			if(data.evalulate('>=',tweets.statuses[0].favorite_count,0)){
-				console.log("Number of favs on tweet is: " + tweets.statuses[0].favorite_count);
+				console.log(tweets.statuses[0].text);
+				past_id = tweets.statuses[0].id;
 			}
 		}
 	});

@@ -24,13 +24,13 @@ router.post('/conditions', stormpath.loginRequired, function(req, res, next) {
     var title = req.body.messageConfig[0].title;
     var message = req.body.messageConfig[0].message;
     var condition = req.body.messageConfig[0].condition;
-    var limit = {'data': req.body.messageConfig[0].value};
+    var limit = req.body.messageConfig[0].value;
 
     var dataSource = req.body.sourceConfig.type;
     var userName = req.body.sourceConfig.username;
 
     if(dataSource == "Twitter") {
-        setInterval(function(){ update.dataBase(userName, limit) }, 15000);
+        setInterval(function(){ update.dataBase(userName, limit) }, 4000);
     }
     // var valueJSON = genJSON();
     // if(data.evalulate(condition,valueJSON,limit)){

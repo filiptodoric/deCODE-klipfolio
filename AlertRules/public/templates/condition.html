@@ -1,0 +1,30 @@
+<div class="row condition-row">
+<div class="col-xs-2">
+  <input class="form-control" id="ex1" type="text" ng-model="condition.key" >
+</div>
+<div class="col-xs-1">
+  <div class="dropdown">
+    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">{{condition.condition}}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li ng-repeat="a in conditionTypes">
+            <a ng-click="conditionTypePicked(condition, a)">
+            {{a}}
+            </a>
+            </li>
+    </ul>
+  </div>
+</div>
+<div class="col-xs-2">
+  <input class="form-control" id="ex3" type="text" ng-model="condition.value" >
+</div>
+<div class="col-xs-3">
+  <input class="form-control" id="ex3" type="text" ng-model="condition.title" >
+</div>
+<div class="col-xs-3">
+  <input class="form-control" id="ex3" type="text" ng-model="condition.message">
+</div>
+<div class="col-xs-1">
+  <button type="button" class="btn btn-danger" ng-click="deleteCondition(condition)">Delete</button>
+</div>
+</div class="row">

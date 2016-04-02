@@ -11,7 +11,7 @@ var update = require("./scripts/Update");
 
 var jsonObj = {'data': []};
 
-setInterval(function(){ update.dataBase()}, 3000);
+setInterval(function(){ update.dataBase()}, 15000);
 
 var genJSON = function() {
     jsonObj.data[jsonObj.data.length] = Math.floor((Math.random() * 100) + 1);

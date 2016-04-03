@@ -23,6 +23,8 @@ exports.sendSlack = function(body) {
 		if(error !== null){
 			console.log(error);
 		}
-		console.log("recived: slack");
+		else{
+			console.log("recived from: slackClient");
+		}
 	})
 };

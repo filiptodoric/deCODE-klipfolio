@@ -20,15 +20,19 @@ exports.dataBase = function(username, hash){
 	var hashtag = hash;
 
 	client.get('search/tweets', {q: query}, function(error, tweets, response){
+		//check if there is an error
 		if(tweets.statuses === undefined){
+				console.log("something went wrong");
 				return;
 		}
+		//check if it is the same id (past_id is golbal)
 		if(tweets.statuses[0].id != past_id){
 			if(data.evalulate('>=',tweets.statuses[0].favorite_count,0)){
-				var tweet = tweets.statuses[0].text;
-				if(tweet.toLowerCase().indexOf(hashtag) > -1)	{
-					notifications.sendSlack(tweets.statuses[0].text);
-				}
+				
+				//log the message that will be sent
+				console.log("sendingMessage:"+tweets.statuses[0].text);
+				notifications.sendSlack(tweets.statuses[0].text);
+				//}
 				past_id = tweets.statuses[0].id;
 			}
 		}
